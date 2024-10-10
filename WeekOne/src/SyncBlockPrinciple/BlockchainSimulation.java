@@ -1,4 +1,4 @@
-package day1;
+package SyncBlockPrinciple;
 
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -7,28 +7,28 @@ import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Test03 {
+public class BlockchainSimulation {
 
 
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-        // Step 1: 工作量证明出块
+        // Step 1: Proof-of-Work (PoW) block mining
         String nickname = "HoJuan"; // 请将此替换为您的昵称
         Block genesisBlock = createGenesisBlock(nickname);
         System.out.println("Genesis Block created with hash: " + genesisBlock.hash);
 
-        // Step 2: 交易打包进入区块
+        // Step 2: Transactions are packaged into blocks
         List<Transaction> transactions = new ArrayList<>();
         transactions.add(new Transaction("Alice", "Bob", 10));
         transactions.add(new Transaction("Bob", "Charlie", 5));
         Block newBlock = createNewBlock(genesisBlock, transactions, nickname);
         System.out.println("New Block created with hash: " + newBlock.hash);
 
-        // Step 3: 节点同步区块
+        // Step 3:Node synchronizes blocks
         List<Block> blockchain = new ArrayList<>();
         blockchain.add(genesisBlock);
         blockchain.add(newBlock);
 
-        // 打印区块链信息
+        // Print blockchain information
         blockchain.forEach(block -> {
             System.out.println("Block Hash: " + block.hash);
             System.out.println("Previous Hash: " + block.previousHash);
@@ -49,18 +49,18 @@ public class Test03 {
 
     }
 
-    // 创建创世区块
+    // Create a genesis block
     public static Block createGenesisBlock(String nickname) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         return mineBlock(new Block(0, "0", null), nickname);
     }
 
-    // 创建新块
+    // Create a new block
     public static Block createNewBlock(Block previousBlock, List<Transaction> transactions, String nickname) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Block newBlock = new Block(previousBlock.index + 1, previousBlock.hash, transactions);
         return mineBlock(newBlock, nickname);
     }
 
-    // 工作量证明（挖矿）
+    // Proof of Work (Mining)
     public static Block mineBlock(Block block, String nickname) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         long nonce = 0;
@@ -80,7 +80,7 @@ public class Test03 {
         }
     }
 
-    // 将字节数组转换为十六进制字符串
+    // Convert a byte array to a hexadecimal string
     private static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
@@ -89,7 +89,7 @@ public class Test03 {
         return sb.toString();
     }
 
-    // 区块类
+    // Block class
     static class Block {
         int index;
         String previousHash;
@@ -103,7 +103,7 @@ public class Test03 {
             this.transactions = transactions != null ? transactions : new ArrayList<>();
         }
 
-        // 计算交易的哈希值
+        // Calculate the hash of a transaction
         public String getTransactionsHash() {
             return transactions.stream()
                     .map(Transaction::toString)
@@ -111,7 +111,7 @@ public class Test03 {
         }
     }
 
-    // 交易类
+    // Transaction class
     static class Transaction {
         String sender;
         String receiver;

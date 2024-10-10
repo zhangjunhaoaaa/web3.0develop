@@ -1,23 +1,23 @@
-package day1;
+package SyncBlockPrinciple;
 
 import java.security.*;
 import java.util.Base64;
 
-public class Test02 {
+public class RSAPowSignature {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
-        String nickname = "HoJuan"; // 请将此替换为您的昵称
+        String nickname = "HoJuan"; // Please replace this with your nickname
 
-        // 生成RSA公私钥对
+        // Generate an RSA public-private key pair
         KeyPair keyPair = generateRSAKeyPair();
 
-        // 生成满足POW条件的 nonce 和哈希
+        // Generate a nonce and hash satisfying the Proof of Work (PoW) condition
         String powResult = findHashWithLeadingZeros(nickname, 4); // 例如满足4个0开头的POW
 
-        // 用私钥签名
+        // Sign with a private key
         String signature = signWithPrivateKey(powResult, keyPair.getPrivate());
 
-        // 用公钥验证签名
+        // Verify the signature with a public key
         boolean isVerified = verifyWithPublicKey(powResult, signature, keyPair.getPublic());
 
         System.out.println("Original Text: " + powResult);
@@ -31,14 +31,14 @@ public class Test02 {
         //Verification: true
     }
 
-    // 生成RSA公私钥对
+    // Generate an RSA public-private key pair
     public static KeyPair generateRSAKeyPair() throws NoSuchAlgorithmException {
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
         keyGen.initialize(2048);
         return keyGen.generateKeyPair();
     }
 
-    // 工作量证明（POW），找到符合条件的哈希
+    // Proof of Work (PoW), finding a hash that meets certain criteria
     public static String findHashWithLeadingZeros(String base, int numberOfZeros) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         String target = "0".repeat(numberOfZeros);
@@ -58,7 +58,7 @@ public class Test02 {
         }
     }
 
-    // 将字节数组转换为十六进制字符串
+    // Convert a byte array to a hexadecimal string
     private static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
@@ -67,7 +67,7 @@ public class Test02 {
         return sb.toString();
     }
 
-    // 使用私钥对数据进行签名
+    // Sign data using a private key
     public static String signWithPrivateKey(String data, PrivateKey privateKey) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Signature signature = Signature.getInstance("SHA256withRSA");
         signature.initSign(privateKey);
@@ -76,7 +76,7 @@ public class Test02 {
         return Base64.getEncoder().encodeToString(signedBytes);
     }
 
-    // 使用公钥验证签名
+    // Verify the signature using a public key
     public static boolean verifyWithPublicKey(String data, String signature, PublicKey publicKey) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Signature sig = Signature.getInstance("SHA256withRSA");
         sig.initVerify(publicKey);

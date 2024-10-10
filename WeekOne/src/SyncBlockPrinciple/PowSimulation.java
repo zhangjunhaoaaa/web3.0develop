@@ -1,20 +1,20 @@
-package day1;
+package SyncBlockPrinciple;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Test01 {
+public class PowSimulation {
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
-        String nickname = "HoJuan"; // 请将此替换为您的昵称
+        String nickname = "HoJuan"; // Please replace this with your nickname
 
-        //为4时计算而出的时间
+        //The time calculated when it is 4
         long startTime = System.currentTimeMillis();
         findHashWithLeadingZeros(nickname, 4);
         long fourZerosTime = System.currentTimeMillis() - startTime;
 
 
-        //为5时计算得出的时间
+        //The time calculated when it is 5
         startTime = System.currentTimeMillis();
         findHashWithLeadingZeros(nickname, 5);
         long fiveZerosTime = System.currentTimeMillis() - startTime;
@@ -34,12 +34,12 @@ public class Test01 {
 
     public static void findHashWithLeadingZeros(String base, int numberOfZeros) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        String target = "0".repeat(numberOfZeros);//包含指定数量的前导零
+        String target = "0".repeat(numberOfZeros);//Contains a specified number of leading zeros
         long nonce = 0;
 
         while (true) {
             String input = base + nonce;
-            byte[] hashBytes = digest.digest(input.getBytes());//计算input的SHA-256哈希值
+            byte[] hashBytes = digest.digest(input.getBytes());//Calculate the SHA-256 hash of the input
             String hash = bytesToHex(hashBytes);
 
             if (hash.startsWith(target)) {
@@ -54,7 +54,7 @@ public class Test01 {
     private static String bytesToHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
-            sb.append(String.format("%02x", b));//将字节b转换为两位的十六进制字符串
+            sb.append(String.format("%02x", b));//Convert the byte b into a two-digit hexadecimal string
         }
         return sb.toString();
     }
