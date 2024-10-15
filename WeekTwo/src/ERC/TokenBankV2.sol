@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-//扩展 ERC20 合约 ，添加一个有hook 功能的转账函数，如函数名为：transferWithCallback ，在转账时，如果目标地址是合约地址的话，调用目标地址的 tokensReceived() 方法。
-//继承 TokenBank 编写 TokenBankV2，支持存入扩展的 ERC20 Token，用户可以直接调用 transferWithCallback 将 扩展的 ERC20 Token 存入到 TokenBankV2 中。
-//（备注：TokenBankV2 需要实现 tokensReceived 来实现存款记录工作）
+//Extend the ERC20 contract and add a transfer function with a hook function. For example, the function name is: transferWithCallback. During the transfer, if the target address is the contract address, the tokensReceived() method of the target address is called.
+//Inherit TokenBank and write TokenBankV2, which supports the storage of extended ERC20 Token. Users can directly call transferWithCallback to save the extended ERC20 Token into TokenBankV2.
+//(Note: TokenBankV2 needs to implement tokensReceived to implement deposit recording)
 
 interface IERC777Receiver {
     function tokensReceived(address operator, address from, address to, uint256 amount, bytes calldata userData, bytes calldata operatorData) external;
