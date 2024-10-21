@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WeekOne/WeekOne.iml" filepath="$PROJECT_DIR$/WeekOne/WeekOne.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WeekThree/WeekThree.iml" filepath="$PROJECT_DIR$/WeekThree/WeekThree.iml" />
       <module fileurl="file://$PROJECT_DIR$/WeekTwo/WeekTwo.iml" filepath="$PROJECT_DIR$/WeekTwo/WeekTwo.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/web3.0develop.iml" filepath="$PROJECT_DIR$/.idea/web3.0develop.iml" />
     </modules>
